@@ -1,0 +1,20 @@
+.navButton {
+  border: 0;
+  background: transparent;
+  color: var(--fg2);
+  width: 28px;
+  height: 100%;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.navButton:hover:not(:disabled) {
+  background: var(--panel2);
+  color: var(--fg);
+}
+
+.navButton:disabled {
+  color: var(--line2);
+  cursor: default;
+}

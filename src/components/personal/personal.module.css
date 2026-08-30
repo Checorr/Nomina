@@ -1,0 +1,51 @@
+/*
+ * Estados hover de la pestaña Personal.
+ *
+ * El prototipo (Personal Nómina.dc.html) expresa estos estados con el
+ * atributo no estándar `style-hover="..."`. En React se resuelven aquí,
+ * como clases CSS locales, en vez de con estado de hover en JS (más simple
+ * para casos puramente visuales sin lógica asociada).
+ */
+
+/* Fila de tabla: monto de tarifa en reposo, clic para editar. */
+.rateTrigger {
+  border: 1px solid transparent;
+}
+.rateTrigger:hover {
+  border: 1px dashed var(--line2);
+  background: var(--panel2);
+}
+
+/* Botón "⋯" de menú contextual por fila. */
+.menuButton {
+  border: 1px solid transparent;
+}
+.menuButton:hover {
+  border: 1px solid var(--line2);
+  background: var(--panel2);
+}
+
+/* Ítems del popover del menú contextual. */
+.menuItem {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  padding: 6px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.menuItem:hover {
+  background: var(--panel2);
+}
+
+/* Botón "Reponer tarjeta" en la ficha de empleado. */
+.reponerBtn {
+  border: 1px solid var(--line2);
+  background: var(--panel);
+}
+.reponerBtn:hover {
+  border: 1px solid var(--fg2);
+}
