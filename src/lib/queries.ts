@@ -206,6 +206,8 @@ export async function obtenerEmpleado(id: number): Promise<EmpleadoDetalle | nul
     monto: Number(c.monto),
     recurrente: c.recurrente,
     saldoRestante: toNumber(c.saldoRestante),
+    vigenteDesde: fechaADiaIso(c.creadoEn ?? new Date(0)),
+    vigenteHasta: null,
   }));
 
   // Últimas 4 semanas (lunes a domingo), de la más antigua a la más reciente.
@@ -369,6 +371,7 @@ export async function calcularNomina(periodoId: number): Promise<NominaPeriodo> 
       sueldo: round2(sueldoRaw),
       bonos: round2(bonosRaw),
       descuentos: round2(descuentosRaw),
+      descuentosDiferidos: 0,
       neto: round2(netoRaw),
       incompleta: jornadaInfo.incompleta,
     };
@@ -381,17 +384,27 @@ export async function calcularNomina(periodoId: number): Promise<NominaPeriodo> 
       acc.sueldo += fila.sueldo;
       acc.bonos += fila.bonos;
       acc.descuentos += fila.descuentos;
+      acc.descuentosDiferidos += fila.descuentosDiferidos;
       acc.neto += fila.neto;
       if (fila.unidad === "dia") acc.dias += fila.cantidad;
       else acc.horas += fila.cantidad;
       return acc;
     },
-    { sueldo: 0, bonos: 0, descuentos: 0, neto: 0, dias: 0, horas: 0 },
+    {
+      sueldo: 0,
+      bonos: 0,
+      descuentos: 0,
+      descuentosDiferidos: 0,
+      neto: 0,
+      dias: 0,
+      horas: 0,
+    },
   );
 
   const alertas = {
     incompletas: filas.filter((f) => f.incompleta).length,
     sinTarjeta: empleadosActivos.filter((e) => !empleadosConTarjeta.has(e.id)).length,
+    conDiferidos: 0,
   };
 
   return {
@@ -401,6 +414,7 @@ export async function calcularNomina(periodoId: number): Promise<NominaPeriodo> 
       sueldo: round2(totales.sueldo),
       bonos: round2(totales.bonos),
       descuentos: round2(totales.descuentos),
+      descuentosDiferidos: round2(totales.descuentosDiferidos),
       neto: round2(totales.neto),
       dias: round2(totales.dias),
       horas: round1(totales.horas),
