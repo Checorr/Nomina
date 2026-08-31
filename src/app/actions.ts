@@ -301,3 +301,4 @@ export async function cerrarPeriodo(periodoId: number): Promise<ActionResult> {
     return { ok: false, error: "No se pudo cerrar el periodo. Intenta de nuevo." };
   }
 }
+//prueba
